@@ -22,31 +22,34 @@ namespace LayeredConsoleApp.Infrastructure
             return task;
         }
 
-
         public List<TaskItem> GetAll()
         {
             return _tasks;
         }
-
 
         public TaskItem GetById(int id)
         {
             return _tasks.FirstOrDefault(t => t.Id == id);
         }
 
-
         public bool Remove(int id)
         {
             var task = GetById(id);
-
             if (task == null)
-            {
                 return false;
-            }
+
+            _tasks.Remove(task);
+            return true;
+        }
+
+        public bool ToggleComplete(int id)
+        {
+            var task = GetById(id);
+            if (task == null)
+                return false;
 
             task.IsCompleted = !task.IsCompleted;
             return true;
-
         }
     }
 }
